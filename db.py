@@ -211,9 +211,38 @@ class Database:
         finally:
             conn.close()
 
+    def get_product_all_orders(self, product_id):
+        try:
+            conn = sqlite3.connect(self.file_name)
 
-    # check if a user has a specific entitlement
+            cursor = conn.execute("SELECT id, user_id FROM orders WHERE product_id = ?",
+                                  (product_id, ))
 
-    # show all orders relating to a product
+            rows = cursor.fetchall()
 
-    # show all entitlements relating to a product
+            conn.close()
+
+            return rows
+        except Exception as e:
+            print(e)
+        finally:
+            conn.close()
+
+    def get_product_all_entitlements(self, product_id):
+        try:
+            conn = sqlite3.connect(self.file_name)
+
+            cursor = conn.execute("SELECT id, user_id FROM entitlements WHERE product_id = ?",
+                                  (product_id, ))
+
+            rows = cursor.fetchall()
+
+            conn.close()
+
+            return rows
+        except Exception as e:
+            print(e)
+        finally:
+            conn.close()
+
+    # get product's price and then add this to buy_product

@@ -12,11 +12,19 @@ def main():
 
     database.buy_product(user_id, product_id)
 
-    orders = database.get_user_all_orders(user_id)
-    print(orders)
+    user_orders = database.get_user_all_orders(user_id)
+    print(user_orders)
 
-    entitlements = database.get_user_all_entitlements(user_id)
-    print(entitlements)
+    user_entitlements = database.get_user_all_entitlements(user_id)
+    print(user_entitlements)
+
+    product_orders = database.get_product_all_orders(product_id)
+    print(product_orders)
+
+    product_entitlements = database.get_product_all_entitlements(product_id)
+    print(product_entitlements)
+
+
 
     yes = database.does_user_have_entitlement(user_id, 1)
     print(yes)
