@@ -132,12 +132,7 @@ class Database:
 
             conn.commit()
 
-            cursor = conn.execute("""
-            SELECT price FROM products WHERE id = ?""",
-                                  (product_id,))
-
-            row = cursor.fetchone()
-            price = row[0] if row else None
+            price = self.get_product_price(product_id)
             if price is None:
                 return "Product does not exist"
 
@@ -245,4 +240,21 @@ class Database:
         finally:
             conn.close()
 
-    # get product's price and then add this to buy_product
+    def get_product_price(self, product_id):
+        try:
+            conn = sqlite3.connect(self.file_name)
+
+            cursor = conn.execute("SELECT price FROM products WHERE id = ?",
+                                  (product_id, ))
+
+            row = cursor.fetchone()
+
+            price = row[0] if row else None
+
+            conn.close()
+
+            return price
+        except Exception as e:
+            print(e)
+        finally:
+            conn.close()
